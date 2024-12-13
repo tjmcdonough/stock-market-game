@@ -96,3 +96,7 @@ docker run -d -p <new-port>:8080 -p <new-port>:8081 --name stock-market-game sto
 ```bash
 docker logs stock-market-game
 ```
+
+## Test Coverage
+
+![alt text](image-1.png)

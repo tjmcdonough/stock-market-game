@@ -11,15 +11,17 @@ public class StockAnalyticsService(IStockRepository repository) : IStockAnalytic
     public async Task<SumAllStockResponse> SumAllStocks()
     {
         List<Stock> stocks = (await repository.List()).ToList();
+        int expectedCount = stocks.Count;
     
         List<IGrouping<long, Stock>> stocksByTimestamp = stocks
             .GroupBy(s => s.UpdatedAt)
-            .OrderByDescending(g => g.Key).ToList();
+            .OrderByDescending(g => g.Key)
+            .ToList();
     
         foreach (IGrouping<long, Stock> group in stocksByTimestamp)
         {
             List<Stock> stocksInTimestamp = group.ToList();
-            if (stocksInTimestamp.Count == stocks.Count)
+            if (stocksInTimestamp.Count == expectedCount)
             {
                 return new SumAllStockResponse(
                     Sum: stocksInTimestamp.Sum(s => s.Price),
@@ -31,7 +33,8 @@ public class StockAnalyticsService(IStockRepository repository) : IStockAnalytic
     
         IGrouping<long, Stock>? latestGroup = stocksByTimestamp.FirstOrDefault();
         throw new NoCompleteStockSetException(
-            timestamp: latestGroup?.Key ?? 0
+            timestamp: latestGroup?.Key ?? 0,
+            expectedCount
         );
     }
 }
