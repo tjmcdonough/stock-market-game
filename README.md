@@ -2,6 +2,8 @@
 
 A .NET web backend application that simulates real-time stock price movements for a set of fictional stocks.
 
+![alt text](image.png)
+
 ## Project Overview
 This application simulates a stock market by:
 
@@ -18,6 +20,17 @@ The system implements:
 - Real-time price calculation simulation with artificial 1-second processing delay
 - Whole number prices (no decimal places)
 - REST API endpoints for retrieving current stock prices
+
+## API Reference
+
+It has been deployed to Render.com and is available at:
+
+Base URL: https://stock-market-game.onrender.com
+
+Available endpoints:
+- GET /popular-stocks
+- GET /stocks?name={stockName}
+- GET /sum-stocks
 
 ## Prerequisites
 
